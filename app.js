@@ -24,12 +24,13 @@ app.use(
   session({
     secret: "any string",
     resave: false,
-    saveUninitialized: false,
-    proxy: true,
-    cookie: {
-      sameSite: "none",
-      secure: true
-    },
+    saveUninitialized: true,
+    // saveUninitialized: false,
+    // proxy: true,
+    // cookie: {
+    //   sameSite: "none",
+    //   secure: true
+    // },
 
     // store: new session.MemoryStore(),
   })
