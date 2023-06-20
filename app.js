@@ -17,21 +17,29 @@ mongoose.connect(CONNECTION_STRING);
 
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(express.json());
 // app.use(cors())
+// app.use(
+//   session({
+//     secret: "any string",
+//     resave: false,
+//     proxy: true,
+//     saveUninitialized: false,
+//     cookie: {
+//       sameSite: "none",
+//       secure: true,
+//     },
+//   })
+// );
+
+
 app.use(
   session({
     secret: "any string",
     resave: false,
     saveUninitialized: true,
-    // saveUninitialized: false,
-    // proxy: true,
-    // cookie: {
-    //   sameSite: "none",
-    //   secure: true
-    // },
-
     // store: new session.MemoryStore(),
   })
 );

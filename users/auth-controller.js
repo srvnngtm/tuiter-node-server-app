@@ -37,6 +37,7 @@ const AuthController = (app) => {
     if (username && password) {
       const user = await usersDao.findUserByCredentials(username, password);
       if (user) {
+        console.log(user)
         req.session["currentUser"] = user;
         res.json(user);
       } else {
@@ -50,11 +51,13 @@ const AuthController = (app) => {
 
   const profile = async (req, res) => {
     const currentUser = req.session["currentUser"];
-    if (!currentUser) {
-      res.sendStatus(404);
-      return;
+    console.log(currentUser)
+    if (currentUser) {
+      res.json(currentUser);
+    }else{
+      res.sendStatus(403);
     }
-    res.json(currentUser);
+    
   };
 
   const logout = async (req, res) => {
