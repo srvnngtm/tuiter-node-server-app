@@ -24,8 +24,14 @@ app.use(
   session({
     secret: "any string",
     resave: false,
-    saveUninitialized: true,
-    store: new session.MemoryStore(),
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+      sameSite: "none",
+      secure: true
+    },
+
+    // store: new session.MemoryStore(),
   })
 );
 
