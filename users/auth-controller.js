@@ -1,5 +1,6 @@
 import * as usersDao from "./users-dao.js";
 
+var currentUserVar;
 
 
 const AuthController = (app) => {
@@ -25,7 +26,8 @@ const AuthController = (app) => {
       return;
     }
     const newUser = await usersDao.createUser(req.body);
-    req.session["currentUser"] = newUser;
+    // req.session["currentUser"] = newUser;
+    currentUserVar = newUser;
     res.json(newUser);
   };
   
@@ -38,7 +40,8 @@ const AuthController = (app) => {
       const user = await usersDao.findUserByCredentials(username, password);
       if (user) {
         console.log(user)
-        req.session["currentUser"] = user;
+        // req.session["currentUser"] = user;
+        currentUserVar = user;
         res.json(user);
       } else {
         res.sendStatus(403);
@@ -50,7 +53,8 @@ const AuthController = (app) => {
   
 
   const profile = async (req, res) => {
-    const currentUser = req.session["currentUser"];
+    // const currentUser = req.session["currentUser"];
+    const currentUser = currentUserVar;
     console.log(currentUser)
     if (currentUser) {
       res.json(currentUser);
@@ -77,10 +81,14 @@ const AuthController = (app) => {
   // };
 
   const update = async (req, res) => {
-    const id = req.params.id;
+    const id = req.params.uid;
+    console.log("id to update : " + id )
+    console.log("req body to update : " + req.body )
     const status = await usersDao.updateUser(id, req.body);
     const user = await usersDao.findUserById(id);
-    req.session["currentUser"] = user;
+    console.log("after update  + " + user)
+    // req.session["currentUser"] = user;
+    currentUserVar = user;
     res.json(status);
   };
   
